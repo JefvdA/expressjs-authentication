@@ -6,9 +6,11 @@ function get() {
 
 function set(newMessage) {
     message = newMessage;
+
+    return message;
 }
 
 module.exports = {
     get,
     set
-}
+};
