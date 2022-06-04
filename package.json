@@ -2,7 +2,7 @@
   "name": "chat-app-be",
   "version": "0.0.0",
   "description": "Personal project - back-end for chat-app made in nodejs ",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/JefvdA/Chat-app-BE#readme",
   "dependencies": {
+    "body-parser": "^1.20.0",
     "express": "^4.18.1"
   }
 }
