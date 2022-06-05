@@ -8,4 +8,8 @@ db.role = require("./role.model");
 
 db.ROLES = ["user", "moderator"];
 
+db.init = function() {
+    db.role.init(db.ROLES);
+}
+
 module.exports = db;
