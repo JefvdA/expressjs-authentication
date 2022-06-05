@@ -1,9 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const app = express();
 const port = 3000;
 
+const db = require('./src/models');
 const dbConfig = require('./src/config/db.config');
 const authConfig = require('./src/config/auth.config');
 
@@ -22,16 +22,19 @@ app.use(
 )
 
 // DB Connection
-mongoose.connect(dbConfig.url, dbConfig.options)
+db.mongoose.connect(dbConfig.url, dbConfig.options)
 .then(() => console.log('DB Connected'))
 .catch(err => console.log(err));
 
-const helloworldRouter = require('./src/routes/helloworld.route');
-
+// Test route
 app.get('/api', (req, res) => {
-    res.json({'message': 'ok'});
+  res.json({'message': 'ok'});
 });
 
+// Import routes
+const helloworldRouter = require('./src/routes/helloworld.route');
+
+// Use routes
 app.use('/api/helloworld', helloworldRouter);
 
 app.listen(port, () => {
