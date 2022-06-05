@@ -1,6 +1,11 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const cookieSession = require('cookie-session');
 const app = express();
 const port = 3000;
+
+const dbConfig = require('./src/config/db.config');
+const authConfig = require('./src/config/auth.config');
 
 app.use(express.json());
 app.use(
@@ -8,12 +13,16 @@ app.use(
     extended: true,
   })
 );
-
+app.use(
+  cookieSession({
+    name: 'chat-app-session',
+    secret: authConfig.cookieSecret,
+    httpOnly: true,
+  })
+)
 
 // DB Connection
-const mongoose = require('mongoose');
-const db = require('./src/config/db.config');
-mongoose.connect(db.url, db.options)
+mongoose.connect(dbConfig.url, dbConfig.options)
 .then(() => console.log('DB Connected'))
 .catch(err => console.log(err));
 
