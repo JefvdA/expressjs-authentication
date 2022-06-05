@@ -10,13 +10,20 @@ app.use(
   })
 );
 
+// DB Connection
+const mongoose = require('mongoose');
+const db = require('./src/config/db.config');
+mongoose.connect(db.url, db.options)
+.then(() => console.log('DB Connected'))
+.catch(err => console.log(err));
+
 const helloworldRouter = require('./src/routes/helloworld.route');
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.json({'message': 'ok'});
 });
 
-app.use('/helloworld', helloworldRouter);
+app.use('/api/helloworld', helloworldRouter);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}!`);
