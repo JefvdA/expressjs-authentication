@@ -1,14 +1,14 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
   })
 );
+
 
 // DB Connection
 const mongoose = require('mongoose');
