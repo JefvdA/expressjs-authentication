@@ -1,6 +1,6 @@
 const helloworldMessage = require('../services/helloworld.service');
 
-function get(req, res, next) {
+get = (req, res, next) => {
     try {
         message = helloworldMessage.get();
 
@@ -11,7 +11,7 @@ function get(req, res, next) {
     }
 }
 
-function set(req, res, next) {
+set = (req, res, next) => {
     try {
         message = helloworldMessage.set(req.body.message);
 
