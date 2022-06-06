@@ -27,4 +27,7 @@ function init(roles){
     });
 }
 
-module.exports = Role;
+module.exports = {
+    Role,
+    init
+};

@@ -38,7 +38,7 @@ isModerator = (req, res, next) => {
         }
 
         var roles = user.roles.map(role => role.name);
-        if (roles.indexOf('moderator') >= 0) {
+        if (roles.includes('moderator') || roles.includes('admin')) {
             next();
             return;
         } else {
