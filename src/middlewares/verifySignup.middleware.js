@@ -46,11 +46,11 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
     });
 }
 
-checkRoleExists = (req, res, next) => {
-    Role.findOne({
-        name: req.body.role
+checkRolesExist = (req, res, next) => {
+    Role.find({
+        name: { $in: req.body.roles }
     })
-    .exec((err, role) => {
+    .exec((err, roles) => {
         if (err) {
             res.status(500).send({
                 message: err
@@ -58,7 +58,7 @@ checkRoleExists = (req, res, next) => {
             return;
         }
 
-        if (!role) {
+        if (!roles) {
             res.status(400).send({
                 message: 'Role does not exist'
             });
@@ -71,7 +71,7 @@ checkRoleExists = (req, res, next) => {
 
 const verifySignUp = {
     checkDuplicateUsernameOrEmail,
-    checkRoleExists
+    checkRolesExist
 }
 
 module.exports = verifySignUp;

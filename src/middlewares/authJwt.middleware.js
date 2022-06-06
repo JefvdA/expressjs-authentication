@@ -7,11 +7,19 @@ const Role = db.role;
 verifyToken = (req, res, next) => {
     let token = req.session.token;
     if (!token) {
-        return res.status(401).send({ auth: false, message: 'No token provided.' });
+        res.status(401).send({ 
+            auth: false, 
+            message: 'No token provided.' 
+        });
+        return;
     }
     jwt.verify(token, authConfig.jwtSecret, (err, decoded) => {
         if (err) {
-            return res.status(401).send({ auth: false, message: 'Failed to authenticate token.' });
+            res.status(401).send({ 
+                auth: false, 
+                message: 'Failed to authenticate token.' 
+            });
+            return;
         }
         req.userId = decoded.id;
         next();
@@ -21,7 +29,10 @@ verifyToken = (req, res, next) => {
 isModerator = (req, res, next) => {
     User.findById(req.userId, (err, user) => {
         if (err) {
-            res.status(500).send({ message: err });
+            res.status(500).send({ 
+                message: err 
+            });
+            return;
         }
         Role.find(
             {
@@ -29,14 +40,21 @@ isModerator = (req, res, next) => {
             },
             (err, roles) => {
                 if(err) {
-                    res.status(500).send({ message: err });
+                    res.status(500).send({ 
+                        message: err 
+                    });
+                    return;
                 }
 
                 if(roles.indexOf('moderator') > -1) {
                     next();
+                    return;
                 }
 
-                res.status(403).send({ message: 'You are not authorized to perform this action.' });
+                res.status(403).send({ 
+                    message: 'You are not authorized to perform this action.' 
+                });
+                return;
             }
         )
     });
