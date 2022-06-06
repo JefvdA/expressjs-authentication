@@ -23,6 +23,14 @@ signup = (req, res) => {
             }
             
             user.roles = roles.map(role => role._id);
+
+            user.save((err, user) => {
+                if (err) {
+                    return res.status(500).send({ message: err });
+                }
+        
+                return res.send({ message: 'User was registered successfully!' });
+            });
         });
     } else {
         Role.findOne({
@@ -33,17 +41,17 @@ signup = (req, res) => {
                 return res.status(500).send({ message: err });
             }
 
-            user.roles = [role._id];
+            user.roles.push(role._id);
+
+            user.save((err, user) => {
+                if (err) {
+                    return res.status(500).send({ message: err });
+                }
+        
+                return res.send({ message: 'User was registered successfully!' });
+            });
         });
     }
-
-    user.save((err, user) => {
-        if (err) {
-            return res.status(500).send({ message: err });
-        }
-
-        return res.send({ message: 'User was registered successfully!' });
-    });
 }
 
 signin = (req, res) => {
