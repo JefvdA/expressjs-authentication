@@ -33,7 +33,7 @@ db.mongoose.connect(dbConfig.url, dbConfig.options)
 .then(() => console.log('DB Connected'))
 .catch(err => console.log(err));
 
-// db.init();
+db.init();
 
 // Test route
 app.get('/api', (req, res) => {

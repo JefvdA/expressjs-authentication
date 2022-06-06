@@ -38,7 +38,31 @@ isModerator = (req, res, next) => {
         }
 
         var roles = user.roles.map(role => role.name);
-        if (roles.indexOf('moderator') >= 0) {
+        if (roles.includes('moderator') || roles.includes('admin')) {
+            next();
+            return;
+        } else {
+            res.status(403).send({ 
+                message: 'You are not authorized to perform this action.' 
+            });
+            return;
+        }
+    });
+}
+
+isAdmin = (req, res, next) => {
+    User.findById(req.userId)
+    .populate('roles', '-__v')
+    .exec((err, user) => {
+        if (err) {
+            res.status(500).send({ 
+                message: err 
+            });
+            return;
+        }
+
+        var roles = user.roles.map(role => role.name);
+        if (roles.includes('admin')) {
             next();
             return;
         } else {
@@ -52,7 +76,8 @@ isModerator = (req, res, next) => {
 
 const authJwt = {
     verifyToken,
-    isModerator
+    isModerator,
+    isAdmin
 }
 
 module.exports = authJwt;

@@ -10,8 +10,13 @@ moderatorBoard = (req, res, next) => {
     res.status(200).send("Moderator content.");
 }
 
+adminBoard = (req, res, next) => {
+    res.status(200).send("Admin content.");
+}
+
 module.exports = {
     allAcces,
     userBoard,
-    moderatorBoard
+    moderatorBoard,
+    adminBoard
 }
