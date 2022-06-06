@@ -12,5 +12,12 @@ router.get(
     ],
     testController.moderatorBoard
 );
+router.get(
+    '/admin', [
+        authJwt.verifyToken,
+        authJwt.isAdmin
+    ],
+    testController.adminBoard
+);
 
 module.exports = router;
