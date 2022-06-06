@@ -13,45 +13,24 @@ signup = (req, res) => {
         password: bcrypt.hashSync(req.body.password),
     });
 
-    if (req.body.roles) {
-        Role.find({ 
-                name: { $in: req.body.roles }
-        })
-        .exec((err, roles) => {
+    Role.findOne({
+        name: 'user'
+    })
+    .exec((err, role) => {
+        if (err) {
+            return res.status(500).send({ message: err });
+        }
+
+        user.roles.push(role._id);
+
+        user.save((err, user) => {
             if (err) {
                 return res.status(500).send({ message: err });
             }
-            
-            user.roles = roles.map(role => role._id);
-
-            user.save((err, user) => {
-                if (err) {
-                    return res.status(500).send({ message: err });
-                }
-        
-                return res.send({ message: 'User was registered successfully!' });
-            });
+    
+            return res.send({ message: `${user.username} was registered successfully!` });
         });
-    } else {
-        Role.findOne({
-            name: 'user'
-        })
-        .exec((err, role) => {
-            if (err) {
-                return res.status(500).send({ message: err });
-            }
-
-            user.roles.push(role._id);
-
-            user.save((err, user) => {
-                if (err) {
-                    return res.status(500).send({ message: err });
-                }
-        
-                return res.send({ message: 'User was registered successfully!' });
-            });
-        });
-    }
+    });
 }
 
 signin = (req, res) => {
