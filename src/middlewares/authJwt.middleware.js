@@ -27,36 +27,26 @@ verifyToken = (req, res, next) => {
 }
 
 isModerator = (req, res, next) => {
-    User.findById(req.userId, (err, user) => {
+    User.findById(req.userId)
+    .populate('roles', '-__v')
+    .exec((err, user) => {
         if (err) {
             res.status(500).send({ 
                 message: err 
             });
             return;
         }
-        Role.find(
-            {
-                _id: { $in: user.roles }
-            },
-            (err, roles) => {
-                if(err) {
-                    res.status(500).send({ 
-                        message: err 
-                    });
-                    return;
-                }
 
-                if(roles.indexOf('moderator') > -1) {
-                    next();
-                    return;
-                }
-
-                res.status(403).send({ 
-                    message: 'You are not authorized to perform this action.' 
-                });
-                return;
-            }
-        )
+        var roles = user.roles.map(role => role.name);
+        if (roles.indexOf('moderator') >= 0) {
+            next();
+            return;
+        } else {
+            res.status(403).send({ 
+                message: 'You are not authorized to perform this action.' 
+            });
+            return;
+        }
     });
 }
 

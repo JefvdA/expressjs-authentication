@@ -48,7 +48,7 @@ const testRouter = require('./src/routes/test.routes');
 // Use routes
 app.use('/api/helloworld', helloworldRouter);
 app.use('/api/auth', authRouter);
-app.use('api/test', testRouter);
+app.use('/api/test', testRouter);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}!`);
