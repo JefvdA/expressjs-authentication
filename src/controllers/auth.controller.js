@@ -80,8 +80,55 @@ signout = (req, res) => {
     }
 }
 
+assignRole = (req, res) => {
+    const { username, role } = req.body;
+
+    User.findOne({
+        username: username
+    })
+    .populate('roles')
+    .exec((err, user) => {
+        if (err) {
+            return res.status(500).send({ message: err });
+        }
+
+        if (!user) {
+            return res.status(404).send({ message: 'User Not found.' });
+        }
+
+        var roles = user.roles.map(role => role.name);
+        if(roles.includes(role)) {
+            return res.status(400).send({ message: `${username} already has ${role} role.` });
+        }
+
+        Role.findOne({
+            name: role
+        })
+        .exec((err, role) => {
+            if (err) {
+                return res.status(500).send({ message: err });
+            }
+
+            if (!role) {
+                return res.status(404).send({ message: 'Role Not found.' });
+            }
+
+            user.roles.push(role);
+
+            user.save((err, user) => {
+                if (err) {
+                    return res.status(500).send({ message: err });
+                }
+
+                return res.send({ message: `${user.username} was assigned ${role.name} successfully!` });
+            });
+        });
+    });
+}
+
 module.exports = {
     signup,
     signin,
-    signout
+    signout,
+    assignRole
 }
