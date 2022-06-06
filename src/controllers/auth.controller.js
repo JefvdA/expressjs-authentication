@@ -76,14 +76,14 @@ signin = (req, res) => {
             });
         }
 
-        var token = jwt.sign({ id: user.id }, authConfig.secret, {
+        var token = jwt.sign({ id: user.id }, authConfig.jwtSecret, {
             expiresIn: 86400 // 24 hours
         });
 
         var authorities = user.roles.map(role => `ROLE_${role.name.toUpperCase()}`); // "user" -> "ROLE_USER"
 
         req.session.token = token;
-        req.status(200).send({
+        res.status(200).send({
             id: user.id,
             username: user.username,
             email: user.email,
