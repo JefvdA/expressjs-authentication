@@ -51,7 +51,7 @@ signin = (req, res) => {
     })
     .catch(err => {
         res.status(500).send({
-            message: err.message || 'Some error occurred while retrieving your user.'
+            message: err || 'Some error occurred while retrieving your user.'
         });
     });
 }
@@ -74,7 +74,7 @@ assignRole = (req, res) => {
     })
     .catch(err => {
         res.status(500).send({
-            message: err.message || 'Some error occurred while assigning the role.'
+            message: err || 'Some error occurred while assigning the role.'
         });
     });
 }

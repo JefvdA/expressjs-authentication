@@ -17,21 +17,21 @@ registerUser = (username, email, password) => {
         })
         .exec((err, role) => {
             if (err) {
-                reject(err.message);
+                return reject(err.message);
             }
 
             if (!role) {
-                reject('There is no role named "user"');
+                return reject('There is no role named "user"');
             }
     
             user.roles.push(role._id);
     
             user.save((err, user) => {
                 if (err) {
-                    reject(err.message);
+                    return reject(err.message);
                 }
         
-                resolve(`${user.username} was registered successfully!`);
+                return resolve(`${user.username} was registered successfully!`);
             });
         });
     });
@@ -45,14 +45,14 @@ getUserByName = (username) => {
         .populate('roles', '-__v')
         .exec((err, user) => {
             if (err) {
-                reject(err.message);
+                return reject(err.message);
             }
 
             if (!user) {
-                reject('User not found');
+                return reject('User not found');
             }
 
-            resolve(user);
+            return resolve(user);
         });
     });
 }
@@ -65,16 +65,16 @@ assignRoleToUser = (username, newRole) => {
         .populate('roles', '-__v')
         .exec((err, user) => {
             if (err) {
-                reject(err.message);
+                return reject(err.message);
             }
 
             if (!user) {
-                reject('User not found');
+                return reject('User not found');
             }
 
             var roles = user.roles.map(role => role.name);
             if(roles.includes(newRole)) {
-                reject(`${username} already has ${newRole} role.`);
+                return reject(`${username} already has ${newRole} role.`);
             }
 
             Role.findOne({
@@ -82,21 +82,21 @@ assignRoleToUser = (username, newRole) => {
             })
             .exec((err, role) => {
                 if (err) {
-                    reject(err.message);
+                    return reject(err.message);
                 }
 
                 if (!role) {
-                    reject('Role not found');
+                    return reject('Role not found');
                 }
 
                 user.roles.push(role._id);
 
                 user.save((err, user) => {
                     if (err) {
-                        reject(err.message);
+                        return reject(err.message);
                     }
 
-                    resolve(`${username} was assigned ${role} role successfully!`);
+                    return resolve(`${username} was assigned ${newRole} role successfully!`);
                 });
             });
         });
