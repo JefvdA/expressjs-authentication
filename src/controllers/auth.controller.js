@@ -23,40 +23,37 @@ signup = (req, res) => {
 }
 
 signin = (req, res) => {
-    User.findOne({
-        username: req.body.username
+    const { username, password } = req.body;
+
+    authService.getUserByName(username)
+    .then(user => {
     })
-    .populate('roles', '-__v')
-    .exec((err, user) => {
-        if (err) {
-            return res.status(500).send({ message: err });
-        }
-
-        if (!user) {
-            return res.status(404).send({ message: 'User Not found.' });
-        }
-
-        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-        if (!passwordIsValid) {
-            return res.status(401).send({ 
-                accessToken: null,
-                message: 'Invalid Password!' 
-            });
-        }
-
-        var token = jwt.sign({ id: user.id }, authConfig.jwtSecret, {
-            expiresIn: 86400 // 24 hours
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || 'Some error occurred while retrieving users.'
         });
+    });
 
-        var authorities = user.roles.map(role => `ROLE_${role.name.toUpperCase()}`); // "user" -> "ROLE_USER"
-
-        req.session.token = token;
-        res.status(200).send({
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            roles: authorities,
+    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+    if (!passwordIsValid) {
+        return res.status(401).send({ 
+            accessToken: null,
+            message: 'Invalid Password!' 
         });
+    }
+
+    var token = jwt.sign({ id: user.id }, authConfig.jwtSecret, {
+        expiresIn: 86400 // 24 hours
+    });
+
+    var authorities = user.roles.map(role => `ROLE_${role.name.toUpperCase()}`); // "user" -> "ROLE_USER"
+
+    req.session.token = token;
+    res.status(200).send({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        roles: authorities,
     });
 }
 

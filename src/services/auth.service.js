@@ -37,6 +37,27 @@ registerUser = (username, email, password) => {
     });
 }
 
+getUserByName = (username) => {
+    return new Promise((resolve, reject) => {
+        User.findOne({
+            username: username
+        })
+        .populate('roles', '-__v')
+        .exec((err, user) => {
+            if (err) {
+                reject(err.message);
+            }
+
+            if (!user) {
+                reject('User not found');
+            }
+
+            resolve(user);
+        });
+    });
+}
+
 module.exports = {
     registerUser,
+    getUserByName
 }
