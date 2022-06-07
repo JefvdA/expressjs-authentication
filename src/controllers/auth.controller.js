@@ -6,29 +6,18 @@ const Role = db.role;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+const authService = require('../services/auth.service');
+
 signup = (req, res) => {
-    const user = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password),
-    });
+    const { username, email, password } = req.body;
 
-    Role.findOne({
-        name: 'user'
+    authService.registerUser(username, email, password)
+    .then(message => {
+        res.status(200).send(message);
     })
-    .exec((err, role) => {
-        if (err) {
-            return res.status(500).send({ message: err });
-        }
-
-        user.roles.push(role._id);
-
-        user.save((err, user) => {
-            if (err) {
-                return res.status(500).send({ message: err });
-            }
-    
-            return res.send({ message: `${user.username} was registered successfully!` });
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || 'Some error occurred while creating the user.'
         });
     });
 }
