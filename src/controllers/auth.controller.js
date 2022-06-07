@@ -9,7 +9,9 @@ signup = (req, res) => {
 
     authService.registerUser(username, email, password)
     .then(message => {
-        res.status(200).send(message);
+        res.status(200).send({
+            message: message
+        });
     })
     .catch(err => {
         res.status(500).send({
@@ -58,7 +60,9 @@ assignRole = (req, res) => {
 
     authService.assignRoleToUser(username, role)
     .then(message => {
-        res.status(200).send(message);
+        res.status(200).send({
+            message: message
+        });
     })
     .catch(err => {
         res.status(500).send({
