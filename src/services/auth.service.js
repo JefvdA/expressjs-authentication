@@ -57,7 +57,54 @@ getUserByName = (username) => {
     });
 }
 
+assignRoleToUser = (username, newRole) => {
+    return new Promise((resolve, reject) => {
+        User.findOne({
+            username: username
+        })
+        .populate('roles', '-__v')
+        .exec((err, user) => {
+            if (err) {
+                reject(err.message);
+            }
+
+            if (!user) {
+                reject('User not found');
+            }
+
+            var roles = user.roles.map(role => role.name);
+            if(roles.includes(newRole)) {
+                reject(`${username} already has ${newRole} role.`);
+            }
+
+            Role.findOne({
+                name: newRole
+            })
+            .exec((err, role) => {
+                if (err) {
+                    reject(err.message);
+                }
+
+                if (!role) {
+                    reject('Role not found');
+                }
+
+                user.roles.push(role._id);
+
+                user.save((err, user) => {
+                    if (err) {
+                        reject(err.message);
+                    }
+
+                    resolve(`${username} was assigned ${role} role successfully!`);
+                });
+            });
+        });
+    });
+}
+
 module.exports = {
     registerUser,
-    getUserByName
+    getUserByName,
+    assignRoleToUser
 }

@@ -27,33 +27,32 @@ signin = (req, res) => {
 
     authService.getUserByName(username)
     .then(user => {
+        var passwordIsValid = bcrypt.compareSync(password, user.password);
+        if (!passwordIsValid) {
+            return res.status(401).send({ 
+                accessToken: null,
+                message: 'Invalid Password!' 
+            });
+        }
+
+        var token = jwt.sign({ id: user.id }, authConfig.jwtSecret, {
+            expiresIn: 86400 // 24 hours
+        });
+
+        var authorities = user.roles.map(role => `ROLE_${role.name.toUpperCase()}`); // "user" -> "ROLE_USER"
+
+        req.session.token = token;
+        res.status(200).send({
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            roles: authorities,
+        });
     })
     .catch(err => {
         res.status(500).send({
-            message: err.message || 'Some error occurred while retrieving users.'
+            message: err.message || 'Some error occurred while retrieving your user.'
         });
-    });
-
-    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-    if (!passwordIsValid) {
-        return res.status(401).send({ 
-            accessToken: null,
-            message: 'Invalid Password!' 
-        });
-    }
-
-    var token = jwt.sign({ id: user.id }, authConfig.jwtSecret, {
-        expiresIn: 86400 // 24 hours
-    });
-
-    var authorities = user.roles.map(role => `ROLE_${role.name.toUpperCase()}`); // "user" -> "ROLE_USER"
-
-    req.session.token = token;
-    res.status(200).send({
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        roles: authorities,
     });
 }
 
@@ -69,45 +68,13 @@ signout = (req, res) => {
 assignRole = (req, res) => {
     const { username, role } = req.body;
 
-    User.findOne({
-        username: username
+    authService.assignRoleToUser(username, role)
+    .then(message => {
+        res.status(200).send(message);
     })
-    .populate('roles')
-    .exec((err, user) => {
-        if (err) {
-            return res.status(500).send({ message: err });
-        }
-
-        if (!user) {
-            return res.status(404).send({ message: 'User Not found.' });
-        }
-
-        var roles = user.roles.map(role => role.name);
-        if(roles.includes(role)) {
-            return res.status(400).send({ message: `${username} already has ${role} role.` });
-        }
-
-        Role.findOne({
-            name: role
-        })
-        .exec((err, role) => {
-            if (err) {
-                return res.status(500).send({ message: err });
-            }
-
-            if (!role) {
-                return res.status(404).send({ message: 'Role Not found.' });
-            }
-
-            user.roles.push(role);
-
-            user.save((err, user) => {
-                if (err) {
-                    return res.status(500).send({ message: err });
-                }
-
-                return res.send({ message: `${user.username} was assigned ${role.name} successfully!` });
-            });
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || 'Some error occurred while assigning the role.'
         });
     });
 }
