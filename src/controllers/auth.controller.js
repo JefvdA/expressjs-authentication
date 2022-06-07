@@ -1,10 +1,6 @@
 const authConfig = require('../config/auth.config');
-const db = require('../models');
-const User = db.user;
-const Role = db.role;
 
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 
 const authService = require('../services/auth.service');
 
@@ -25,21 +21,13 @@ signup = (req, res) => {
 signin = (req, res) => {
     const { username, password } = req.body;
 
-    authService.getUserByName(username)
+    authService.loginUser(username, password)
     .then(user => {
-        var passwordIsValid = bcrypt.compareSync(password, user.password);
-        if (!passwordIsValid) {
-            return res.status(401).send({ 
-                accessToken: null,
-                message: 'Invalid Password!' 
-            });
-        }
+        var authorities = user.roles.map(role => `ROLE_${role.name.toUpperCase()}`); // "user" -> "ROLE_USER"
 
         var token = jwt.sign({ id: user.id }, authConfig.jwtSecret, {
-            expiresIn: 86400 // 24 hours
+            expiresIn: authConfig.jwtExpiration
         });
-
-        var authorities = user.roles.map(role => `ROLE_${role.name.toUpperCase()}`); // "user" -> "ROLE_USER"
 
         req.session.token = token;
         res.status(200).send({

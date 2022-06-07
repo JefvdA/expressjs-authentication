@@ -37,7 +37,7 @@ registerUser = (username, email, password) => {
     });
 }
 
-getUserByName = (username) => {
+loginUser = (username, password) => {
     return new Promise((resolve, reject) => {
         User.findOne({
             username: username
@@ -50,6 +50,11 @@ getUserByName = (username) => {
 
             if (!user) {
                 return reject('User not found');
+            }
+
+            var passwordIsValid = bcrypt.compareSync(password, user.password);
+            if (!passwordIsValid) {
+                return reject('Invalid password');
             }
 
             return resolve(user);
@@ -105,6 +110,6 @@ assignRoleToUser = (username, newRole) => {
 
 module.exports = {
     registerUser,
-    getUserByName,
+    loginUser,
     assignRoleToUser
 }
