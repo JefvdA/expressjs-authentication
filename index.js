@@ -47,5 +47,5 @@ app.use("/api/auth", authRouter);
 app.use("/api/test", testRouter);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}!`);
+  console.log(`Chat-app API listening on port ${port}!`);
 });
