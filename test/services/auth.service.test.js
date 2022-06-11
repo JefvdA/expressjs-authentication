@@ -1,47 +1,33 @@
-const { mongoose } = require("../../src/models");
-const { options } = require("../../src/config/db.config");
 const chai = require("chai");
 
 // Assertion style
 const expect = chai.expect;
 
 const authService = require("../../src/services/auth.service");
-const db = require("../../src/models");
-
-// Before starting tests, make connection to test db
-before((done) => {
-    mongoose.connect("mongodb://localhost:27017/chat-app_TESTING", options);
-    mongoose.connection
-    .once("open", () => done())
-    .on("error", (err) => console.error(err));
-});
-
-// After finishing a test, drop all collections
-afterEach(async () => {
-    await mongoose.connection.db.collections()
-        .then(async (collections) => {
-            for (let collection of collections) {
-                await collection.drop();
-            }
-        })
-        .catch((err) => console.log(err));
-});
-
-// Before a test, initialize the database
-beforeEach((done) => {
-    db.init()
-    .then(() => done());
-});
 
 // **********TESTS**********
-describe("Auth service", () => {
+function suite() {
     describe("registerUser()", () => {
-        it("Should successfully register a user", () => {
-            const username = "test";
-            const email = "test@gmail.com"
-            const password = "test1234!";
-
-            return authService.registerUser(username, email, password);
+        const username = "test";
+        const email = "test@gmail.com"
+        const password = "test1234!";
+        it("Should successfully register a user", async () => {
+            const result = await authService.registerUser(username, email, password)
+            expect(result).to.be.equal(`${username} was registered successfully!`);
+        });
+        it("Should fail registering a user when no username was given", async () => {
+            const result = await authService.registerUser("", email, password)
+            expect(result).to.be.equal("Username is required");
+        });
+        it("Should fail registering a user when no email was given", async () => {
+            const result = await authService.registerUser(username, "", password)
+            expect(result).to.be.equal("Email is required");
+        });
+        it("Should fail registering a user when no password was given", async () => {
+            const result = await authService.registerUser(username, email, "")
+            expect(result).to.be.equal("Password is required");
         });
     });
-});
+}
+
+module.exports = suite;
