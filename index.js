@@ -33,11 +33,6 @@ db.mongoose
 
 db.init();
 
-// Test route
-app.get("/api", (req, res) => {
-  res.json({ message: "ok" });
-});
-
 // Import routes
 const authRouter = require("./src/routes/auth.routes");
 const testRouter = require("./src/routes/test.routes");
