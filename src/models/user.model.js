@@ -17,9 +17,9 @@ const User = mongoose.model(
     }),
 );
 
-function init() {
-    return new Promise((resolve, reject) => {
-        User.estimatedDocumentCount((err, count) => {
+async function init() {
+    return new Promise(async (resolve, reject) => {
+        await User.estimatedDocumentCount((err, count) => {
             if(!err && count === 0){
                 Role.findOne({
                     name: 'admin'
@@ -27,6 +27,10 @@ function init() {
                 .exec((err, role) => {
                     if (err) {
                         return reject(err);
+                    }
+
+                    if(!role) {
+                        return reject('There is no role named "admin"');
                     }
 
                     new User({
