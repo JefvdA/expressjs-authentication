@@ -4,7 +4,7 @@
   "description": "Personal project - back-end for chat-app made in nodejs ",
   "main": "index.js",
   "scripts": {
-    "test": "mocha 'test/**/*.test.js'"
+    "test": "mocha 'test/**/*.test.js' --timeout 10000"
   },
   "repository": {
     "type": "git",
