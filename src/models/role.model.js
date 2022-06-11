@@ -8,22 +8,23 @@ const Role = mongoose.model(
 );
 
 function init(roles){
-    Role.estimatedDocumentCount((err, count) => {
-        if(!err && count === 0){
-            roles.forEach(role => {
-                new Role({
-                    name: role,
-                })
-                .save(err => {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-                    
-                    console.log(`${role} role created`);
-                })
-            });
-        }
+    return new Promise((resolve, reject) => {
+        Role.estimatedDocumentCount((err, count) => {
+            if(!err && count === 0){
+                roles.forEach(role => {
+                    new Role({
+                        name: role,
+                    })
+                    .save(err => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        
+                        return resolve(`${role} role created`);
+                    })
+                });
+            }
+        });
     });
 }
 

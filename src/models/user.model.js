@@ -18,31 +18,33 @@ const User = mongoose.model(
 );
 
 function init() {
-    User.estimatedDocumentCount((err, count) => {
-        if(!err && count === 0){
-            Role.findOne({
-                name: 'admin'
-            })
-            .exec((err, role) => {
-                if (err) {
-                    return res.status(500).send({ message: err });
-                }
-
-                new User({
-                    username: 'admin',
-                    email: 'admin@gmail.com',
-                    password: bcrypt.hashSync('admin'),
-                    roles: [role._id],
+    return new Promise((resolve, reject) => {
+        User.estimatedDocumentCount((err, count) => {
+            if(!err && count === 0){
+                Role.findOne({
+                    name: 'admin'
                 })
-                .save((err, user) => {
+                .exec((err, role) => {
                     if (err) {
-                        return res.status(500).send({ message: err });
+                        return reject(err);
                     }
 
-                    console.log(`${user.username} user created`);
+                    new User({
+                        username: 'admin',
+                        email: 'admin@gmail.com',
+                        password: bcrypt.hashSync('admin'),
+                        roles: [role._id],
+                    })
+                    .save((err, user) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(`${user.username} user created`);
+                    });
                 });
-            });
-        }
+            }
+        });
     });
 }
 
