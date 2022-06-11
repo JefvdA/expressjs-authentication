@@ -12,13 +12,9 @@ db.ROLES = ["user", "moderator", "admin"];
 
 db.init = function() {
     return new Promise(async (resolve, reject) => {
-        RoleModel.init(db.ROLES)
-        .then(() => {
-            UserModel.init()
-            .then(() => resolve())
-            .catch(err => reject(err));
-        })
-        .catch(err => reject(err));
+        await RoleModel.init(db.ROLES);
+        await UserModel.init();;
+        resolve();
     });
 }
 

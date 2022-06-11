@@ -19,6 +19,12 @@ function init(roleNames){
                 .then(() => resolve())
                 .catch(err => reject(err));
             }
+            else if (err){
+                reject(err);
+            }
+            else {
+                resolve();
+            }
         });
     });
 }
