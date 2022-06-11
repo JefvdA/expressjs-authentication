@@ -4,7 +4,7 @@
   "description": "Personal project - back-end for chat-app made in nodejs ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha 'test/**/*.test.js'"
   },
   "repository": {
     "type": "git",
