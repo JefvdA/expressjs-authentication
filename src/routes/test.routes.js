@@ -7,16 +7,16 @@ router.get('/all', testController.allAcces);
 router.get('/user', [authJwt.verifyToken], testController.userBoard);
 router.get(
     '/moderator', [
-        authJwt.verifyToken,
-        authJwt.isModerator
-    ],
+    authJwt.verifyToken,
+    authJwt.isModerator
+],
     testController.moderatorBoard
 );
 router.get(
     '/admin', [
-        authJwt.verifyToken,
-        authJwt.isAdmin
-    ],
+    authJwt.verifyToken,
+    authJwt.isAdmin
+],
     testController.adminBoard
 );
 
