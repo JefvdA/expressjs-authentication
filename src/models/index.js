@@ -11,8 +11,11 @@ db.role = RoleModel.Role;
 db.ROLES = ["user", "moderator", "admin"];
 
 db.init = function() {
-    RoleModel.init(db.ROLES);
-    UserModel.init();
+    return new Promise(async (resolve, reject) => {
+        await RoleModel.init(db.ROLES);
+        await UserModel.init();
+        resolve();
+    });
 }
 
 module.exports = db;
