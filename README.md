@@ -112,4 +112,9 @@ docker-compose stop
 # Testing
 If you are contributing to this project, but don't want to manualy test to see if everything still works, you can just run the tests this project has.
 
-***Unfortunatly, we don't have tests currently so this is a feature for later!***
+To run the tests, use following command:
+```
+npm test
+```
+
+For testing, we use the framework [mocha](https://www.npmjs.com/package/mocha), nyc is used to give test coverage when you end the tests.
