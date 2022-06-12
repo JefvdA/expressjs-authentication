@@ -10,6 +10,7 @@ In this guide, you will be explained how to run this project on your own device.
 * [Setup mongodb](#Mongodb-Setup)
 * [.env file](#env-file)
 * [Run the project](#Setup)
+* [Run the project (with docker)](#docker-setup)
 * [Running tests](#Testing)
 
 ***
@@ -86,6 +87,25 @@ After cloning the repo, and setting up the database, it's very easy to run the a
 
 **install the node modules**: `npm install` <br>
 **run the application**: `npm start` or `node index.js` or use [nodemon](https://www.npmjs.com/package/nodemon) to make use of hot-reloading: `nodemon`
+
+***
+
+# Docker setup
+If you prefer, the project can also be ran by using docker.
+
+The [Dockerfile](https://github.com/JefvdA/Chat-app-BE/blob/main/Dockerfile) builds the image for this project. <br>
+This image, and the database (monogodb) are ran in seperate containers which can be ran with [docker-compose](https://github.com/JefvdA/Chat-app-BE/blob/main/docker-compose.yaml).
+
+Start the container-cluster with:
+```
+docker-compose up -d
+```
+*Use the -d flag to start the cluster up in the background*
+
+Docker-compose can be stopped with:
+```
+docker-compose stop
+```
 
 ***
 
