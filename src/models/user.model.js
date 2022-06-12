@@ -19,7 +19,8 @@ const User = mongoose.model(
 
 async function init() {
     return new Promise(async (resolve, reject) => {
-        await User.estimatedDocumentCount((err, count) => {
+        User.estimatedDocumentCount()
+        .then((count, err) => {
             if(!err && count === 0){
                 Role.findOne({
                     name: 'admin'
@@ -48,7 +49,13 @@ async function init() {
                     });
                 });
             }
-        });
+            else if (err){
+                reject(err);
+            }
+            else {
+                resolve();
+            }
+        })
     });
 }
 

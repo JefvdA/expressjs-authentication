@@ -11,9 +11,7 @@ before((done) => {
     mongoose.connect("mongodb://localhost:27017/chat-app_TESTING", options);
     mongoose.connection
     .once("open", () => {
-        dropCollections() // Make sure we start with an empty test db
-        .then(() => done())
-        .catch(err => console.log(err));
+        done();
     })
     .on("error", (err) => console.error(err));
 });
@@ -42,7 +40,9 @@ dropCollections = async () => {
 // Before a test, initialize the database
 beforeEach((done) => {
     db.init()
-    .then(() => done())
+    .then(() => {
+        done();
+    })
     .catch((err) => console.log(err));
 });
 
