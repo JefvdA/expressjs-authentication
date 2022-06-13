@@ -5,13 +5,29 @@ const Role = db.role;
 const bcrypt = require('bcryptjs');
 
 registerUser = (username, email, password) => {
-    const user = new User({
-        username: username,
-        email: email,
-        password: bcrypt.hashSync(password),
-    });
-
     return new Promise((resolve, reject) => {
+        // Validate parameters
+        username = username.replace(/\s/g, '');
+        if (!username || username == ""){
+            return reject("Username is required");
+        }
+
+        email = email.replace(/\s/g, '');
+        if (!email || email == ""){
+            return reject("Email is required");
+        }
+
+        password = password.replace(/\s/g, '');
+        if (!password || password == ""){
+            return reject("Password is required");
+        }
+
+        const user = new User({
+            username: username,
+            email: email,
+            password: bcrypt.hashSync(password),
+        });
+
         Role.findOne({
             name: 'user'
         })
