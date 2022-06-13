@@ -17,7 +17,7 @@ function suite() {
             expect(message).to.be.equal(`${username} was registered successfully!`);
         });
         it("Should fail registering a user when no username was given", async () => {
-            const message = await authService.registerUser(username, email, password)
+            const message = await authService.registerUser("", email, password)
             .catch((err) => {
                 expect(err).to.be.equal("Username is required");
             });
@@ -25,7 +25,7 @@ function suite() {
             expect(message).to.be.not.equal(`${username} was registered successfully!`);
         });
         it("Should fail registering a user when no email was given", async () => {
-            const message = await authService.registerUser(username, email, password)
+            const message = await authService.registerUser(username, "", password)
                 .catch((err) => {
                     expect(err).to.be.equal("Email is required");
                 });
@@ -33,7 +33,7 @@ function suite() {
             expect(message).to.be.not.equal(`${username} was registered successfully!`);
         });
         it("Should fail registering a user when no password was given", async () => {
-            const message = await authService.registerUser(username, email, password)
+            const message = await authService.registerUser(username, email, "")
             .catch((err) => {
                 expect(err).to.be.equal("Password is required");
             });
