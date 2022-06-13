@@ -25,7 +25,7 @@ registerUser = (username, email, password) => {
         const user = new User({
             username: username,
             email: email,
-            password: bcrypt.hashSync(password),
+            password: bcrypt.hashSync(password, 16),
         });
 
         Role.findOne({
