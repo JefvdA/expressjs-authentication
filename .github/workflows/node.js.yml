@@ -36,4 +36,4 @@ jobs:
         mongodb-version: ${{ matrix.mongodb-version }}
         
     - run: npm install
-    - run: npx mocha --exit # We need to provide --exit because otherwise mocha will listen for changes
+    - run: npm test
