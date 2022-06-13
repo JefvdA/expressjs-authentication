@@ -87,7 +87,9 @@ openssl rand -base64 64
 After cloning the repo, and setting up the database, it's very easy to run the application.
 
 **install the node modules**: `npm install` <br>
-**run the application**: `npm start` or `node index.js` or use [nodemon](https://www.npmjs.com/package/nodemon) to make use of hot-reloading: `nodemon`
+**run the application**: `npm start` or `node index.js` <br>
+
+**Make use of hot-reloading**: `npm run dev` or `nodemon` (make sure you have [nodemon](https://www.npmjs.com/package/nodemon) installed)
 
 ***
 
