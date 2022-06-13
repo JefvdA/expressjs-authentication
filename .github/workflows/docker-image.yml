@@ -30,10 +30,3 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/chat-app-api:latest
-        
-    - name: Build and push Docker image To Heroku
-      uses: gonuit/heroku-docker-deploy@v1.3.3
-      with:
-        email: ${{ secrets.HEROKU_EMAIL }}
-        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
