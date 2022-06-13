@@ -4,6 +4,8 @@
   "description": "Personal project - back-end for chat-app made in nodejs ",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "nyc mocha 'test/**/*.test.js' --timeout 10000 --exit"
   },
   "repository": {
