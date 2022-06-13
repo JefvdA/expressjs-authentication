@@ -65,6 +65,7 @@ sudo docker rm [containerName]
 Thourghout the application, environment variables are often used. Below, and expample of how a .env file looks, this file should be placed in the root of the project:
 
 ```
+PORT=3000
 MONGODB_URI="mongodb://localhost:27017/chat-app"
 MONGODB_USERNAME="admin"
 MONGODB_PASSWORD="admin"
