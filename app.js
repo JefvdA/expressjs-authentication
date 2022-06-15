@@ -4,6 +4,42 @@ const app = express();
 
 const authConfig = require("./src/config/auth.config");
 
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Chat app API",
+      version: "0.0.1",
+      description: "Chat app API documentation",
+      contact: {
+        name: "Jef van der Avoirt",
+        url: "https://github.com/JefvdA"
+      },
+      license: {
+        name: "MIT",
+        url: "https://github.com/JefvdA/Chat-app-BE/blob/main/LICENSE"
+      },
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+        description: "Local (dev) server"
+      },
+      {
+        url: "https://jefvda-chat-app-api.herokuapp.com/",
+        description: "Heroku (prod) server"
+      }
+    ]
+  },
+  apis: ["src/routes/*.js"]
+}
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 app.use(express.json());
 app.use(
   express.urlencoded({
