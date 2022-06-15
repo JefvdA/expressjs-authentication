@@ -1,6 +1,15 @@
 # Chat-app-BE
-Back-end system for a chat-app made in nodejs, using expressjs.
+## Live demo
+A live demo of the chat API is hosted on heroku [here](https://jefvda-chat-app-api.herokuapp.com/api-docs), and is automaticly up-to-date with the main branch of this repo.
 
+## Endpoints
+The API endpoints are documented with [swaggerUI](https://swagger.io/).
+
+The endpoint for the swagger docs is: `/api-docs`
+
+<br>
+
+Back-end system for a chat-app made in nodejs, using expressjs.
 As databse, this project uses mongodb, more on how to set that up later in this guide.
 
 If you want to know more about the project structure, naming conventions... look at our [wiki](https://github.com/JefvdA/Chat-app-BE/wiki).
@@ -12,8 +21,6 @@ In this guide, you will be explained how to run this project on your own device.
 * [Run the project](#Setup)
 * [Run the project (with docker)](#docker-setup)
 * [Running tests](#Testing)
-
-***
 
 # Mongodb Setup
 In this part of the guide, the setup for [mongodb](https://www.mongodb.com/docs/manual/installation/) is explained.
