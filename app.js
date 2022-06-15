@@ -57,10 +57,8 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
   next();
 });
-
-// Test route
-app.get("/api", (req, res) => {
-    res.json({ message: "ok" });
+app.get("/", (req, res) => {
+  res.redirect("/api-docs");
 });
 
 // Import routes
