@@ -16,11 +16,29 @@ If you want to know more about the project structure, naming conventions... look
 
 In this guide, you will be explained how to run this project on your own device.
 
+* [Setup scripts](#setup-scripts)
 * [Setup mongodb](#Mongodb-Setup)
 * [.env file](#env-file)
 * [Run the project](#Setup)
 * [Run the project (with docker)](#docker-setup)
 * [Running tests](#Testing)
+
+***
+
+# Setup scripts
+
+In the `/bin` directory, you can find some usefull scripts that make it even easier to work with docker.
+
+### MongoDb
+- startMongo.sh : start a new mongoDB container 
+(with authentication USERNAME='admin', PASSWORD='admin')
+- stopMongo.sh : stop running mongoDB container + delete the container
+
+### Whole project
+- startAll.sh : run docker-compose, and rebuild all the images for when changes are made
+- stopAll.sh : stop docker-compose, and remove all the containers and docker network
+
+***
 
 # Mongodb Setup
 In this part of the guide, the setup for [mongodb](https://www.mongodb.com/docs/manual/installation/) is explained.
