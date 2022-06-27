@@ -16,12 +16,24 @@ If you want to know more about the project structure, naming conventions... look
 
 In this guide, you will be explained how to run this project on your own device.
 
+* [Dev environment](#dev-environment)
 * [Setup scripts](#setup-scripts)
 * [Setup mongodb](#Mongodb-Setup)
 * [.env file](#env-file)
 * [Run the project](#Setup)
 * [Run the project (with docker)](#docker-setup)
 * [Running tests](#Testing)
+
+***
+
+# Dev environment
+
+It is important that everyone uses the same environment for developing the project. It is also much easiers, and saves a lot of time.
+
+This is easily achievable with the vscode remote-containers, dev-containers that can be opened in vscode. Take a look at [this](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
+When the extension is installed, you should have an options to open the project in a new remote-container.
+
+If you want to develop using our development environment, make sure to have docker installed, as this is needed.
 
 ***
 
