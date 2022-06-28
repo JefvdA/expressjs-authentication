@@ -1,0 +1,20 @@
+version: '2'
+services:
+  api:
+    build: .
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+      - PORT=80
+    volumes:
+      - ..:/workspace
+    user: node
+    command: sleep infinity
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - 27017:27017

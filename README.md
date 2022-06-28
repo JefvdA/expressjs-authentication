@@ -103,7 +103,8 @@ Thourghout the application, environment variables are often used. Below, and exp
 
 ```
 PORT=3000
-MONGODB_URI="mongodb://localhost:27017/chat-app"
+MONGODB_URI="mongodb://localhost:27017"
+MONGODB_DATABASE="chat-app"
 MONGODB_USERNAME="admin"
 MONGODB_PASSWORD="admin"
 COOKIE_SECRET="SECRET"

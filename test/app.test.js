@@ -6,9 +6,16 @@ const db = require("../src/models");
 // Import tests
 const authServiceTest = require("./services/auth.service.test");
 
+// Set database url
+const url = process.env.MONGODB_URI;
+let dbURL = 'mongodb://localhost:27017/chat-app_TESTING';
+if (url != undefined) {
+    dbURL = `${url}/chat-app_TESTING`;
+}
+
 // Before starting tests, make connection to test db
 before((done) => {
-    mongoose.connect("mongodb://localhost:27017/chat-app_TESTING", options);
+    mongoose.connect(dbURL, options);
     mongoose.connection
     .once("open", () => {
         done();
