@@ -1,5 +1,5 @@
 const { mongoose } = require("../src/models");
-const { options } = require("../src/config/db.config");
+const { options, url } = require("../src/config/db.config");
 
 const db = require("../src/models");
 
@@ -8,7 +8,7 @@ const authServiceTest = require("./services/auth.service.test");
 
 // Before starting tests, make connection to test db
 before((done) => {
-    mongoose.connect("mongodb://localhost:27017/chat-app_TESTING", options);
+    mongoose.connect(`${url}_TESTING`, options);
     mongoose.connection
     .once("open", () => {
         done();
