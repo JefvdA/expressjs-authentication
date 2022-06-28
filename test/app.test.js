@@ -12,6 +12,8 @@ if (url) {
     dbURL = `${url}_TESTING`;
 }
 
+console.log(dbURL);
+
 // Before starting tests, make connection to test db
 before((done) => {
     mongoose.connect(dbURL, options);
