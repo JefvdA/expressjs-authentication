@@ -6,8 +6,7 @@ services:
       - mongodb
     environment:
       - MONGODB_URI=mongodb://mongodb:27017
-    ports:
-      - 3000:3000
+      - PORT=80
     volumes:
       - ..:/workspace
     user: node
