@@ -8,7 +8,7 @@ const authServiceTest = require("./services/auth.service.test");
 
 // Set database url
 let dbURL = 'mongodb://localhost:27017/chat-app_TESTING';
-if (url) {
+if (url != undefined) {
     dbURL = `${url}_TESTING`;
 }
 
