@@ -1,5 +1,5 @@
 const { mongoose } = require("../src/models");
-const { options, url } = require("../src/config/db.config");
+const { options } = require("../src/config/db.config");
 
 const db = require("../src/models");
 
@@ -7,12 +7,11 @@ const db = require("../src/models");
 const authServiceTest = require("./services/auth.service.test");
 
 // Set database url
+const url = process.env.MONGODB_URI;
 let dbURL = 'mongodb://localhost:27017/chat-app_TESTING';
 if (url != undefined) {
-    dbURL = `${url}_TESTING`;
+    dbURL = `${url}/chat-app_TESTING`;
 }
-
-console.log(dbURL);
 
 // Before starting tests, make connection to test db
 before((done) => {
