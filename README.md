@@ -1,6 +1,4 @@
 # Chat-app-BE
-## Live demo
-A live demo of the chat API is hosted on heroku [here](https://jefvda-chat-app-api.herokuapp.com/api-docs), and is automaticly up-to-date with the main branch of this repo.
 
 ## Endpoints
 The API endpoints are documented with [swaggerUI](https://swagger.io/).
