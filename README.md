@@ -10,7 +10,7 @@ The endpoint for the swagger docs is: `/api-docs`
 
 As databse, this project uses mongodb, more on how to set that up later in this guide.
 
-If you want to know more about the project structure, naming conventions... look at our [wiki](https://github.com/JefvdA/Chat-app-BE/wiki).
+If you want to know more about the project structure, naming conventions... look at our [wiki](https://github.com/JefvdA/expressjs-authentication/wiki).
 
 In this guide, you will be explained how to run this project on your own device.
 
@@ -132,8 +132,8 @@ After cloning the repo, and setting up the database, it's very easy to run the a
 # Docker setup
 If you prefer, the project can also be ran by using docker.
 
-The [Dockerfile](https://github.com/JefvdA/Chat-app-BE/blob/main/Dockerfile) builds the image for this project. <br>
-This image, and the database (monogodb) are ran in seperate containers which can be ran with [docker-compose](https://github.com/JefvdA/Chat-app-BE/blob/main/docker-compose.yaml).
+The [Dockerfile](https://github.com/JefvdA/expressjs-authentication/blob/main/Dockerfile) builds the image for this project. <br>
+This image, and the database (monogodb) are ran in seperate containers which can be ran with [docker-compose](https://github.com/JefvdA/expressjs-authentication/blob/main/docker-compose.yaml).
 
 Start the container-cluster with:
 ```
